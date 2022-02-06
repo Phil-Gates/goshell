@@ -22,7 +22,7 @@ func main() {
     } else if runtime.GOOS == "darwin" {
         session_path = "~/goshellsessions/goshell_session.go"
     } else if runtime.GOOS == "windows" {
-        session_path = "C:\\%userprofile%\\goshellsessions\\goshell_session.go"
+        session_path = "%homepath%\\goshellsessions\\goshell_session.go"
     } else {
         log.Fatal(errors.New("Unkown OS..."))
     }
