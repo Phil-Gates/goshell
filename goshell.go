@@ -71,6 +71,7 @@ func main() {
 func check_errs(err error) {
     if err != nil {
         log.Fatal(err)
+        clr_buf()
     }
 }
 
