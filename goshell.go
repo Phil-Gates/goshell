@@ -18,11 +18,11 @@ const version string = "v0.0.1"
 
 func main() {
     if runtime.GOOS == "linux" {
-        session_path = "/tmp/goshell_session.go"
+        session_path = "~/goshellsessions/goshell_session.go"
     } else if runtime.GOOS == "darwin" {
         session_path = "~/goshellsessions/goshell_session.go"
     } else if runtime.GOOS == "windows" {
-        session_path = "$env:USERPROFILE\\goshellsessions\\goshell_session.go"
+        session_path = "C:\\%userprofile%\\goshellsessions\\goshell_session.go"
     } else {
         log.Fatal(errors.New("Unkown OS..."))
     }
