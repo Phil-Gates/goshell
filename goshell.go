@@ -9,6 +9,7 @@ import (
     "bufio"
     "runtime"
     "errors"
+    "path"
 )
 
 
@@ -18,11 +19,11 @@ const version string = "v0.0.1"
 
 func main() {
     if runtime.GOOS == "linux" {
-        session_path = "~/goshellsessions/goshell_session.go"
+        session_path = "/tmp/goshellsessions/goshell_session.go"
     } else if runtime.GOOS == "darwin" {
-        session_path = "~/goshellsessions/goshell_session.go"
+        session_path = "/tmp/goshellsessions/goshell_session.go"
     } else if runtime.GOOS == "windows" {
-        session_path = "%homepath%\\goshellsessions\\goshell_session.go"
+        session_path = "C:\\goshellsessions\\goshell_session.go"
     } else {
         log.Fatal(errors.New("Unkown OS..."))
     }
@@ -111,7 +112,8 @@ func run_go() {
     cmd := exec.Command("go", "run", session_path)
     cmd.Stdout = os.Stdout
     cmd.Stderr = os.Stderr
-    check_errs(cmd.Run())
+    cmd.Stdin = os.Stdin
+    cmd.Run()
 }
 
 
@@ -160,8 +162,16 @@ func del_last() {
 
 
 func init_file() {
+    if _, err := os.Stat(path.Dir(session_path)); os.IsNotExist(err) {
+        make_dir()
+    }
     clr_buf()
     append_session("package main\n")
     imports()
     append_session("func main() {\n")
+}
+
+func make_dir() {
+    dir := path.Dir(session_path)
+    check_errs(os.Mkdir(dir, 0755))
 }
